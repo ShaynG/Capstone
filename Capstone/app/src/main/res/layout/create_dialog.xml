@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <ScrollView android:layout_height="fill_parent"
+    android:layout_width="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:scrollbarAlwaysDrawVerticalTrack="true"
+    android:scrollbars="vertical">
+
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingVertical="4dp"
+        android:text="Event Name" />
+
+
+    <EditText
+        android:id="@+id/editName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/editText2"
+        android:layout_alignRight="@+id/editText2"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="61dp"
+        android:layout_marginEnd="-107dp"
+        android:layout_marginRight="-107dp"
+        android:autofillHints="Event Name"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:paddingVertical="4dp"/>
+
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Event Location"
+        android:paddingVertical="10dp"
+        android:paddingTop="@android:dimen/app_icon_size"/>
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/editName"
+        android:layout_alignLeft="@+id/editDate"
+        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="6dp"
+        android:layout_marginLeft="8dp"
+        android:textAlignment="center"
+        android:entries="@array/roomSize"
+        />
+
+    <TextView
+        android:id="@+id/timeView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select Time"
+        android:paddingTop="@android:dimen/app_icon_size"/>
+
+    <TimePicker
+        android:id="@+id/timePicker"
+        android:layout_width="361dp"
+        android:layout_height="136dp"
+        android:timePickerMode="spinner" />
+
+    <TextView
+        android:id="@+id/dateView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select Date"
+        android:paddingTop="@android:dimen/app_icon_size"/>
+
+    <DatePicker
+        android:id="@+id/datePicker"
+        android:layout_width="363dp"
+        android:layout_height="106dp"
+        android:calendarViewShown="false"
+        android:datePickerMode="spinner" />
+
+    <EditText
+        android:id="@+id/descriptionBox"
+        android:layout_width="365dp"
+        android:layout_height="134dp"
+        android:hint="Add Description"
+        android:inputType="textMultiLine"
+        android:lines="5"
+        android:maxLines="10"
+        android:textAlignment="viewStart" />
+
+</LinearLayout>
+    </ScrollView>

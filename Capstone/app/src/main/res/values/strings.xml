@@ -1,0 +1,55 @@
+<resources>
+    <string name="app_name">Capstone</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="event_title">Event Title</string>
+    <string name="location">Location</string>
+    <string name="date_time">Date/Time</string>
+    <string name="add_event">Add Event</string>
+    <string-array name="roomSize">
+        <item>Aliso Hall</item>
+        <item>Anacapa Village</item>
+        <item>Arroyo Hall</item>
+        <item>Bell Tower</item>
+        <item>Bell Tower East</item>
+        <item>Bell Tower West</item>
+        <item>Broome Library</item>
+        <item>Central Mall</item>
+        <item>Chaparral Hall</item>
+        <item>Del Norte Hall</item>
+        <item>El Dorado Hall</item>
+        <item>Grand Salon</item>
+        <item>Ironwood Hall</item>
+        <item>Islands Cafe</item>
+        <item>Lighthouse Cafe</item>
+        <item>Lindero Hall</item>
+        <item>Madera Hall</item>
+        <item>Malibu Hall</item>
+        <item>Manzanita Hall</item>
+        <item>Martin V. Smith Center</item>
+        <item>Modoc Hall</item>
+        <item>Napa Hall</item>
+        <item>North Field</item>
+        <item>North Quad</item>
+        <item>Ojai Hall</item>
+        <item>Petit Salon</item>
+        <item>Pizza 3.14</item>
+        <item>Placer Hall</item>
+        <item>Potrero Field</item>
+        <item>Qumpling</item>
+        <item>Sage Hall</item>
+        <item>Santa Cruz Village</item>
+        <item>Santa Rosa Village</item>
+        <item>Sierra Hall</item>
+        <item>Solano Hall</item>
+        <item>South Quad</item>
+        <item>Student Union Building</item>
+        <item>Topanga Hall</item>
+        <item>Tortillas Grill</item>
+        <item>Town Center Market</item>
+        <item>Trinity Hall</item>
+        <item>University Hall</item>
+        <item>Yuba Hall</item>
+
+
+    </string-array>
+</resources>
