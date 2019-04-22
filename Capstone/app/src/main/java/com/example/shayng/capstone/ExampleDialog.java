@@ -19,9 +19,10 @@ import java.util.Date;
 public class ExampleDialog extends AppCompatDialogFragment {
 
     private EditText editTitle;
-    private TimePicker editTime;
+    private TimePicker editStartTime;
     private Spinner spinner;
     private DatePicker editDate;
+    private TimePicker editEndTime;
     private EditText tellMeMore;
     private ExampleDialogListener listener;
 
@@ -33,12 +34,14 @@ public class ExampleDialog extends AppCompatDialogFragment {
 
             LayoutInflater inflater = getActivity().getLayoutInflater();
             View view = inflater.inflate(R.layout.create_dialog,null);
-            editTime = view.findViewById(R.id.timePicker);
-            editTime.setIs24HourView(false);
+            editStartTime = view.findViewById(R.id.startTimePicker);
+            editStartTime.setIs24HourView(false);
             editDate = view.findViewById(R.id.datePicker);
             editTitle = view.findViewById(R.id.editName);
             spinner = view.findViewById(R.id.spinner);
             tellMeMore = view.findViewById(R.id.descriptionBox);
+
+            //editDate.setMaxDate();
 
             builder.setView(view)
             .setTitle("Create New Event")
@@ -63,12 +66,12 @@ public class ExampleDialog extends AppCompatDialogFragment {
 
                     if(title != null && title.length() > 0) {
                         title = editTitle.getText().toString();
-                        hour = editTime.getHour();
-                        minute = editTime.getMinute();
+                        hour = editStartTime.getHour();
+                        minute = editStartTime.getMinute();
                         spin = spinner.getSelectedItem().toString();
                         description = tellMeMore.getText().toString();
                     }
-                        listener.applyMarker(title,hour + ":" + minute,spin, true, description);
+                        listener.applyMarker(title,hour + ":" + minute, hour + ":" + minute,spin, true, description);
 
 
                 }
@@ -80,7 +83,7 @@ public class ExampleDialog extends AppCompatDialogFragment {
     }
 
     public interface ExampleDialogListener{
-        void applyMarker(String title, String date, String place, boolean addData, String description);
+        void applyMarker(String title, String date, String endDate, String place, boolean addData, String description);
 
     }
 

@@ -1,10 +1,12 @@
 <resources>
-    <string name="app_name">Capstone</string>
-    <string name="title_activity_maps">Map</string>
+    <string name="app_name">Ekho Location</string>
+    <string name="title_activity_maps">EkhoLocate</string>
     <string name="event_title">Event Title</string>
     <string name="location">Location</string>
     <string name="date_time">Date/Time</string>
-    <string name="add_event">Add Event</string>
+    <string name="add_event">add event</string>
+    <string name="favorite">Favorite</string>
+
     <string-array name="roomSize">
         <item>Aliso Hall</item>
         <item>Anacapa Village</item>
@@ -49,7 +51,6 @@
         <item>Trinity Hall</item>
         <item>University Hall</item>
         <item>Yuba Hall</item>
-
-
     </string-array>
+
 </resources>

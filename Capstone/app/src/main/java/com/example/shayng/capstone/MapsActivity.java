@@ -1,28 +1,31 @@
 package com.example.shayng.capstone;
 
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.support.v7.app.AppCompatDialog;
-import android.support.v7.app.AppCompatDialogFragment;
-import android.widget.Button;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.*;
+
+import android.widget.SearchView;
 import android.widget.Toast;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, ExampleDialog.ExampleDialogListener {
 
     private GoogleMap mMap;
     private DatabaseReference mDatabase;
-    private Button button;
+    private SearchView searchBar;
+    //private Button button;
+    private FloatingActionButton button;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +50,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     String location = ds.child("location").getValue(String.class);
                     String startTime = ds.child("startTime").getValue(String.class);
                     String title = ds.child("title").getValue(String.class);
+                    String endTime = ds.child("endTime").getValue(String.class);
 
-                    applyMarker(title,startTime,location,false, description);
+                    applyMarker(title,startTime, endTime, location,false, description);
                   //  Log.d("TAG", arrival + " / " + departure  + " / " + time);
                   //  list.add(time);
                 }
@@ -60,34 +64,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         };
         eventsRef.addValueEventListener(valueEventListener);
 
-                //addListenerForSingleValueEvent(valueEventListener);
 
-        //was ListenerForSingleValueEvent
-        //DataSnapshot = mDatabase.
-
-       // final FirebaseDatabase database = FirebaseDatabase.getInstance();
-       // DatabaseReference ref = database.getReference("server/saving-data/fireblog/posts");
-
-       // final FirebaseDatabase database = FirebaseDatabase.getInstance();
-       // DatabaseReference ref = database.getReference();
-
-//        ref.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                //Post post = dataSnapshot.getValue(Post.class);
-//                //System.out.println(post);
-//            }
-//        });
-        //mDatabase.setValue("hi");
-        //Event event = new Event("3","Bitch","Place", "Fun");
-
-        button = findViewById(R.id.addEvent);
+        button = findViewById(R.id.floatingActionButton);
         button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view)
             {
                 eventDialog();
 
+            }
+        });
+        searchBar = findViewById(R.id.searchBar);
+        searchBar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchBar.setIconified(false);
             }
         });
     }
@@ -110,9 +101,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LatLng CI = new LatLng(34.162849, -119.044044);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(CI));
         CameraUpdateFactory.zoomIn();
-        mMap.setMinZoomPreference(17.0f);
-        mMap.setMaxZoomPreference(21.0f);
+        mMap.setMinZoomPreference(16.0f);
+        mMap.setMaxZoomPreference(30.0f);
+        LatLng neBound = new LatLng(34.168748, -119.032949);
+        LatLng swBound = new LatLng(34.157731, -119.055160);
+        mMap.setLatLngBoundsForCameraTarget(new LatLngBounds(swBound,neBound));
+        mMap.getUiSettings().setCompassEnabled(false);
+        mMap.getUiSettings().setMapToolbarEnabled(false);
 
+
+        mMap.setInfoWindowAdapter(new CustomInfoWindowAdapter(MapsActivity.this));
 
 
         // Add a marker in Sydney and move the camera
@@ -131,20 +129,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         ExampleDialog exampleDialog = new ExampleDialog();
         exampleDialog.show(getSupportFragmentManager(), "example dialog");
 
-           //LatLng newEvent = new LatLng(lat, lng);
-           //LatLng CI = new LatLng(34.162849, -119.044044);
-           //mMap.addMarker(new MarkerOptions().position(CI).title("bitchin"));
-        //mMap.addMarker(new MarkerOptions().position(CI).title("Event Name: Shayn's Birthday.\n"));
-        //mMap.moveCamera(CameraUpdateFactory.newLatLng(CI));
 
     }
 
 
     @Override
-    public void applyMarker(String title, String date, String place, boolean addData, String d){
+    public void applyMarker(String title, String date, String endDate, String place, boolean addData, String d){
         LatLng CI = new LatLng(34.162849, -119.044044);
 
-        String eventString = title + " @  " + date;
+        String eventString = title;
 
         //eventString = "<p>Location</p>" + "\n" + "<p>Time</p>";
 
@@ -197,7 +190,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         Event event = new Event(date,title ,place, d);
 
-        mMap.addMarker(new MarkerOptions().position(CI).title(eventString));
+        String everything = "\nLocation: " + place +
+                            "\nTime: " + date +
+                            "\nDescription: " + d;
+
+        mMap.addMarker(new MarkerOptions().position(CI).icon(BitmapDescriptorFactory.fromResource(R.drawable.cutest_dolphin))
+                .title(eventString).snippet(everything));
 
         if(addData) {
             mDatabase.push().setValue(event);
@@ -208,23 +206,4 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-
-
-
-//    public class ExampleDialog extends AppCompatDialogFragment{
-//        @Override
-//        public Dialog onCreateDialog(Bundle savedInsanceState)
-//        {
-//            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-//
-//            LayoutInflater inflater = getActivity().getLayoutInflater();
-//            View view = inflater.inflate(R.layout.layout_dialog,null);
-//
-//            builder.setView(view);
-//            .setTitle("TItle");
-//            .setNegativeButton("cancel",new);
-//
-//        }
-//
-//    }
 }

@@ -27,13 +27,14 @@
         android:layout_alignEnd="@+id/editText2"
         android:layout_alignRight="@+id/editText2"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="61dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="-107dp"
         android:layout_marginRight="-107dp"
         android:autofillHints="Event Name"
         android:ems="10"
         android:inputType="textPersonName"
-        android:paddingVertical="4dp"/>
+        android:paddingVertical="4dp"
+        android:paddingBottom="8dp"/>
 
 
     <TextView
@@ -41,7 +42,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Event Location"
-        android:paddingVertical="10dp"
+        android:paddingVertical="20dp"
         android:paddingTop="@android:dimen/app_icon_size"/>
 
     <Spinner
@@ -66,9 +67,16 @@
         android:paddingTop="@android:dimen/app_icon_size"/>
 
     <TimePicker
-        android:id="@+id/timePicker"
+        android:id="@+id/startTimePicker"
         android:layout_width="361dp"
         android:layout_height="136dp"
+        android:timePickerMode="spinner"
+        />
+
+    <TimePicker
+        android:id="@+id/endTimePicker"
+        android:layout_width="361dp"
+        android:layout_height="105dp"
         android:timePickerMode="spinner" />
 
     <TextView
@@ -81,9 +89,10 @@
     <DatePicker
         android:id="@+id/datePicker"
         android:layout_width="363dp"
-        android:layout_height="106dp"
+        android:layout_height="140dp"
         android:calendarViewShown="false"
-        android:datePickerMode="spinner" />
+        android:datePickerMode="spinner"
+        />
 
     <EditText
         android:id="@+id/descriptionBox"
@@ -93,7 +102,8 @@
         android:inputType="textMultiLine"
         android:lines="5"
         android:maxLines="10"
-        android:textAlignment="viewStart" />
+        android:textAlignment="viewStart"
+        android:scrollHorizontally="false"/>
 
 </LinearLayout>
     </ScrollView>

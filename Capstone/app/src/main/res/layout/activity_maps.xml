@@ -1,31 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width = "match_parent"
     android:layout_height = "match_parent"
     android:orientation = "vertical">
 
-
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:map="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/map"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
+    <SearchView
+        android:id="@+id/searchBar"
         android:layout_width="match_parent"
-        android:layout_height="648dp"
-        tools:context=".MapsActivity"
-        map:cameraTilt="60"/>
+        android:layout_height="55dp"
+        android:clickable="true"
+        android:hint="Search for events..."
+        android:label="Search Events..."
+        android:queryHint="Search events..."
+        android:showAsAction="collapseActionView|ifRoom"
+        android:actionViewClass="android.widget.SearchView"
+        />
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/addEvent"
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/floatingActionButton"
+            android:layout_width="55dp"
+            android:layout_height="70dp"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/ic_add_white_24dp"
+            android:text="@string/add_event"
+            app:backgroundTint="@color/colorPrimaryDark"
+            app:borderWidth="0dp"
+            app:fabSize="normal"
+            app:floating_title="Add Event"
+            app:layout_anchorGravity="bottom|center"
+            app:maxImageSize="43dp" />
+
+
+
+        <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:map="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
-            android:layout_height="75dp"
-            android:text="@string/add_event" />
-    </LinearLayout>
+            android:layout_height="match_parent"
+            map:cameraTilt="60"
+            tools:context=".MapsActivity"/>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|start"
+            android:background="@drawable/button"
+            android:src="@drawable/button" />
+
+
+        <ru.dimorinny.floatingtextbutton.FloatingTextButton
+            android:id="@+id/action_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|start"
+            app:floating_background_color="@color/colorPrimaryDark"
+            app:floating_left_icon="@drawable/ic_add_white_24dp"
+            app:floating_title="add event"
+            app:floating_title_color="@android:color/white"
+            />
+
+    </FrameLayout>
+
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:orientation="horizontal">-->
+
+        <!--<Button-->
+            <!--android:id="@+id/addEvent"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="97dp"-->
+            <!--android:text="@string/add_event" />-->
+    <!--</LinearLayout>-->
 
 </LinearLayout>

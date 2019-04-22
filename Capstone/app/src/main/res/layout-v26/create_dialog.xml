@@ -66,7 +66,7 @@
             android:paddingTop="@android:dimen/app_icon_size"/>
 
         <TimePicker
-            android:id="@+id/timePicker"
+            android:id="@+id/startTimePicker"
             android:layout_width="361dp"
             android:layout_height="105dp"
             android:timePickerMode="spinner" />
@@ -97,10 +97,12 @@
             android:layout_width="365dp"
             android:layout_height="134dp"
             android:hint="Add Description"
-            android:inputType="text"
+            android:inputType="textMultiLine"
             android:lines="5"
             android:maxLines="10"
-            android:textAlignment="viewStart" />
+            android:textAlignment="viewStart"
+            android:scrollHorizontally="false"
+            />
 
     </LinearLayout>
 </ScrollView>
