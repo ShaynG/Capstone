@@ -24,6 +24,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private DatabaseReference mDatabase;
     private SearchView searchBar;
     //private Button button;
+    private FloatingActionButton fragButton;
     private FloatingActionButton button;
 
 
@@ -63,6 +64,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onCancelled(DatabaseError databaseError) {}
         };
         eventsRef.addValueEventListener(valueEventListener);
+
+        fragButton = findViewById(R.id.floatingFragButton);
 
 
         button = findViewById(R.id.floatingActionButton);

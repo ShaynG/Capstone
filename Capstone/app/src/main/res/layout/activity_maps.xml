@@ -24,6 +24,20 @@
 
 
         <android.support.design.widget.FloatingActionButton
+            android:id="@+id/floatingFragButton"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_margin="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/ic_cardview_24dp"
+            android:text="@string/add_event"
+            app:backgroundTint="@color/colorPrimaryDark"
+            app:fabSize="normal"
+            android:layout_gravity="top|end"
+            app:maxImageSize="43dp" />
+
+        <android.support.design.widget.FloatingActionButton
             android:id="@+id/floatingActionButton"
             android:layout_width="55dp"
             android:layout_height="70dp"
@@ -50,7 +64,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             map:cameraTilt="60"
-            tools:context=".MapsActivity"/>
+            tools:context=".MapsActivity"
+            />
 
         <ImageButton
             android:layout_width="wrap_content"
