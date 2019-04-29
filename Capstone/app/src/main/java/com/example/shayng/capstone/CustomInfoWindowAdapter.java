@@ -19,7 +19,7 @@ public class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
         mWindow = LayoutInflater.from(context).inflate(R.layout.custom_info_window, null);
     }
 
-    private void rendowWindowText(Marker marker, View view){
+    private void renderWindowText(Marker marker, View view){
 
         String title = marker.getTitle();
         String snippet = marker.getSnippet();
@@ -45,7 +45,7 @@ public class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
 
     @Override
     public View getInfoContents(Marker marker) {
-        rendowWindowText(marker, mWindow);
+        renderWindowText(marker, mWindow);
         return mWindow;
     }
 }

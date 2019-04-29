@@ -24,10 +24,7 @@
             android:id="@+id/editName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/editText2"
-            android:layout_alignRight="@+id/editText2"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="61dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="-107dp"
             android:layout_marginRight="-107dp"
             android:autofillHints="Event Name"
@@ -48,10 +45,6 @@
             android:id="@+id/spinner"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/editName"
-            android:layout_alignLeft="@+id/editDate"
-            android:layout_centerInParent="true"
-            android:layout_centerHorizontal="true"
             android:layout_marginStart="6dp"
             android:layout_marginLeft="8dp"
             android:textAlignment="center"
@@ -65,17 +58,28 @@
             android:text="Select Time"
             android:paddingTop="@android:dimen/app_icon_size"/>
 
+
+
         <TimePicker
             android:id="@+id/startTimePicker"
             android:layout_width="361dp"
             android:layout_height="105dp"
-            android:timePickerMode="spinner" />
+            android:timePickerMode="spinner"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:id="@+id/timeTo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="to"
+            android:layout_gravity="center"/>
 
         <TimePicker
             android:id="@+id/endTimePicker"
             android:layout_width="361dp"
             android:layout_height="105dp"
-            android:timePickerMode="spinner" />
+            android:timePickerMode="spinner"
+            android:layout_gravity="center"/>
 
 
         <TextView
@@ -88,9 +92,10 @@
         <DatePicker
             android:id="@+id/datePicker"
             android:layout_width="363dp"
-            android:layout_height="85dp"
+            android:layout_height="114dp"
             android:calendarViewShown="false"
-            android:datePickerMode="spinner" />
+            android:datePickerMode="spinner"
+            android:layout_gravity="center"/>
 
         <EditText
             android:id="@+id/descriptionBox"

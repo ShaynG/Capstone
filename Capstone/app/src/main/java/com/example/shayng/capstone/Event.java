@@ -1,19 +1,38 @@
 package com.example.shayng.capstone;
+import java.util.ArrayList;
 import java.util.Date;
+
 
 public class Event {
     private String startTime;
     private String endTime;
-    Date date = new Date();
+    private Date date;
     private String title;
     private String location;
     private String description;
+    private String urlLink;
+
+    public String getUrlLink() {
+        return urlLink;
+    }
+
+    public void setUrlLink(String urlLink) {
+        this.urlLink = urlLink;
+    }
 
 
     public Event(String startTime, String title, String location, String description) {
         this.startTime = startTime;
         this.title = title;
         this.location = location;
+        this.description = description;
+    }
+
+    public Event(String startTime, String title, String location, String description, String urLink) {
+        this.startTime = startTime;
+        this.title = title;
+        this.location = location;
+        this.urlLink = urLink;
         this.description = description;
     }
 

@@ -3,7 +3,9 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.app.Dialog;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.ColorInt;
 import android.support.v7.app.AppCompatDialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,7 +43,11 @@ public class ExampleDialog extends AppCompatDialogFragment {
             spinner = view.findViewById(R.id.spinner);
             tellMeMore = view.findViewById(R.id.descriptionBox);
 
+
+            editDate.setMinDate(System.currentTimeMillis());
             //editDate.setMaxDate();
+
+
 
             builder.setView(view)
             .setTitle("Create New Event")
@@ -56,22 +62,25 @@ public class ExampleDialog extends AppCompatDialogFragment {
                     String title="ok";
                     int hour=0;
                     int minute=0;
-                    String spin="ok";
-                    String description="ok";
+                    String AMPM="";
+                    String spin="";
+                    String description="";
+
 
                     //Date daten = new Date();
                    // Time
-                    //String date = editDate.getMonth() + " " + editDate.getDayOfMonth();
+                    String date = editDate.getMonth() + " " + editDate.getDayOfMonth();
 
 
                     if(title != null && title.length() > 0) {
                         title = editTitle.getText().toString();
-                        hour = editStartTime.getHour();
+                        hour = editStartTime.getHour() % 12 == 0? 12: editStartTime.getHour() % 12;
                         minute = editStartTime.getMinute();
+                        AMPM = editStartTime.getHour() - 12 < 0? "AM":"PM";
                         spin = spinner.getSelectedItem().toString();
                         description = tellMeMore.getText().toString();
                     }
-                        listener.applyMarker(title,hour + ":" + minute, hour + ":" + minute,spin, true, description);
+                        listener.applyMarker(title,hour + ":" + minute + AMPM, hour + ":" + minute + AMPM,spin, true, description);
 
 
                 }

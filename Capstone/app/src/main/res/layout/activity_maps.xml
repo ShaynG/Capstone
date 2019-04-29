@@ -18,6 +18,37 @@
         android:actionViewClass="android.widget.SearchView"
         />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/colorPrimary">
+
+        <ToggleButton
+            android:id="@+id/toggleButton2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textOff="Events Today"
+            android:backgroundTint="@color/colorPrimary"/>
+
+        <!--<Spinner-->
+            <!--android:id="@+id/spinner2"-->
+            <!--android:layout_width="232dp"-->
+            <!--android:layout_height="46dp"-->
+            <!--android:background="@color/colorPrimary" />-->
+
+        <ToggleButton
+            android:id="@+id/toggleButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textOff="All Events"
+            android:backgroundTint="@color/colorPrimary"
+            />
+
+    </LinearLayout>
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -55,7 +86,6 @@
             app:maxImageSize="43dp" />
 
 
-
         <fragment xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:map="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"
@@ -64,27 +94,19 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             map:cameraTilt="60"
-            tools:context=".MapsActivity"
-            />
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|start"
-            android:background="@drawable/button"
-            android:src="@drawable/button" />
+            tools:context=".MapsActivity" />
 
 
-        <ru.dimorinny.floatingtextbutton.FloatingTextButton
-            android:id="@+id/action_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top|start"
-            app:floating_background_color="@color/colorPrimaryDark"
-            app:floating_left_icon="@drawable/ic_add_white_24dp"
-            app:floating_title="add event"
-            app:floating_title_color="@android:color/white"
-            />
+        <!--<ru.dimorinny.floatingtextbutton.FloatingTextButton-->
+            <!--android:id="@+id/action_button"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="top|start"-->
+            <!--app:floating_background_color="@color/colorPrimaryDark"-->
+            <!--app:floating_left_icon="@drawable/ic_add_white_24dp"-->
+            <!--app:floating_title="add event"-->
+            <!--app:floating_title_color="@android:color/white"-->
+            <!--/>-->
 
     </FrameLayout>
 

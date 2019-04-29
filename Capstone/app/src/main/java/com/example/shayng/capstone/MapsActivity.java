@@ -1,9 +1,11 @@
 package com.example.shayng.capstone;
 
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.content.Intent;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -12,20 +14,26 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.*;
 
 import android.widget.SearchView;
 import android.widget.Toast;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, ExampleDialog.ExampleDialogListener {
+import java.util.ArrayList;
+
+public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, ExampleDialog.ExampleDialogListener {
+
+    //was extends FragmentActivity
 
     private GoogleMap mMap;
     private DatabaseReference mDatabase;
     private SearchView searchBar;
-    //private Button button;
     private FloatingActionButton fragButton;
     private FloatingActionButton button;
+    private ArrayList<Event> events;
+    private ArrayList<Marker> markers;
 
 
     @Override
@@ -37,6 +45,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+
+        //findViewById(android.R.id.title).setBackgroundColor();
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Event");
 
@@ -60,12 +70,29 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             }
 
+
+
             @Override
             public void onCancelled(DatabaseError databaseError) {}
         };
         eventsRef.addValueEventListener(valueEventListener);
 
         fragButton = findViewById(R.id.floatingFragButton);
+        fragButton.setOnClickListener(new View.OnClickListener(){
+
+
+
+            public void onClick(View view) {
+
+
+
+                Intent toCards = new Intent(MapsActivity.this, CardsActivity.class);
+                startActivity(toCards, null);
+
+
+            }
+
+        });
 
 
         button = findViewById(R.id.floatingActionButton);
@@ -115,15 +142,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         mMap.setInfoWindowAdapter(new CustomInfoWindowAdapter(MapsActivity.this));
 
-
-        // Add a marker in Sydney and move the camera
-        //LatLng sydney = new LatLng(-130, 10);
-        //mMap.addMarker(new MarkerOptions().position(sydney).title("Event Name: Shayn's Birthday.\n" + "Location: Bell Tower\n"+"Time: 12/05/18 at 6:00pm"));
-        //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-
-
-        //googleMap.getMyLocation()
-       // CameraPosition cameraPosition =
     }
 
 
@@ -132,18 +150,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         ExampleDialog exampleDialog = new ExampleDialog();
         exampleDialog.show(getSupportFragmentManager(), "example dialog");
 
-
     }
 
 
     @Override
     public void applyMarker(String title, String date, String endDate, String place, boolean addData, String d){
-        LatLng CI = new LatLng(34.162849, -119.044044);
 
-        String eventString = title;
+        LatLng CI;
 
         //eventString = "<p>Location</p>" + "\n" + "<p>Time</p>";
-
         if(place.equals("Bell Tower")) CI = new LatLng(34.1611, -119.04312);
         else if(place.equals("Broome Library")) CI = new LatLng(34.162619, -119.041338);
         else if(place.equals("Madera Hall")) CI = new LatLng(34.162849, -119.044044);
@@ -197,15 +212,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             "\nTime: " + date +
                             "\nDescription: " + d;
 
-        mMap.addMarker(new MarkerOptions().position(CI).icon(BitmapDescriptorFactory.fromResource(R.drawable.cutest_dolphin))
-                .title(eventString).snippet(everything));
+
+
+        mMap.addMarker(new MarkerOptions().position(CI).icon(BitmapDescriptorFactory.fromResource(R.drawable.ekho_marker_mini))
+                .title(title).snippet(everything));
+
+        //markers.add(new Marker(12,3))
 
         if(addData) {
             mDatabase.push().setValue(event);
             Toast.makeText(MapsActivity.this,"New Event Created!", Toast.LENGTH_SHORT).show();
         }
         //mDatabase.push().setValue(event);
-
 
     }
 

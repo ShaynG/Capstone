@@ -1,15 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
 
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical">
 
-    <android.support.v7.widget.CardView
+    <SearchView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/colorPrimary">
+
+        <ToggleButton
+            android:id="@+id/toggleButton4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textOff="Events Today"
+            android:backgroundTint="@color/colorPrimary"/>
+
+        <!--<Spinner-->
+        <!--android:id="@+id/spinner2"-->
+        <!--android:layout_width="232dp"-->
+        <!--android:layout_height="46dp"-->
+        <!--android:background="@color/colorPrimary" />-->
+
+        <!--<ToggleButton-->
+            <!--android:id="@+id/toggleButton3"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:textOff="All Events"-->
+            <!--android:backgroundTint="@color/colorPrimary" />-->
+
+    </LinearLayout>
+
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </android.support.v7.widget.CardView>
+
+    <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.RecyclerView
+    android:id="@+id/my_recycler_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="vertical" >
+
+    </android.support.v7.widget.RecyclerView>
 
 
-</android.support.v7.widget.RecyclerView>
+    </RelativeLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/mapsButton"
+            android:layout_width="55dp"
+            android:layout_height="70dp"
+            android:layout_gravity="top|end"
+            android:layout_marginStart="340dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/ic_mapview_24dp"
+            android:text="@string/add_event"
+            app:backgroundTint="@color/colorPrimaryDark"
+            app:borderWidth="0dp"
+            app:fabSize="normal"
+            app:floating_title="Add Event"
+            app:maxImageSize="43dp" />
+
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/cardfloatingActionButton"
+            android:layout_width="55dp"
+            android:layout_height="70dp"
+            android:layout_margin="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/ic_add_white_24dp"
+            android:text="@string/add_event"
+            app:backgroundTint="@color/colorPrimaryDark"
+            app:borderWidth="0dp"
+            app:fabSize="normal"
+            app:floating_title="Add Event"
+            android:layout_gravity="bottom|end"
+            app:maxImageSize="43dp" />
+
+    </FrameLayout>
+
+</LinearLayout>
+
+
+
+
+
+
+
+
+
