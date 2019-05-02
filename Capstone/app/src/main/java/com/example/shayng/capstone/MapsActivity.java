@@ -17,11 +17,15 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.*;
-
-import android.widget.SearchView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+//import android.widget.SearchView;
 import android.widget.Toast;
-
+import android.support.v7.widget.SearchView;
+import android.view.inputmethod.EditorInfo;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, ExampleDialog.ExampleDialogListener {
 
@@ -34,6 +38,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private FloatingActionButton button;
     private ArrayList<Event> events;
     private ArrayList<Marker> markers;
+    private ArrayList<Marker> markersFilter;
+    private Calendar now;
 
 
     @Override
@@ -45,7 +51,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-
+        markers = new ArrayList<>();
+        markersFilter = new ArrayList<>(markers);
         //findViewById(android.R.id.title).setBackgroundColor();
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Event");
@@ -57,6 +64,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 for(DataSnapshot ds : dataSnapshot.getChildren()) {
+
                     String description = ds.child("description").getValue(String.class);
                     String location = ds.child("location").getValue(String.class);
                     String startTime = ds.child("startTime").getValue(String.class);
@@ -65,7 +73,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                     applyMarker(title,startTime, endTime, location,false, description);
                   //  Log.d("TAG", arrival + " / " + departure  + " / " + time);
-                  //  list.add(time);
+                  // list.add(time);
                 }
 
             }
@@ -104,13 +112,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             }
         });
-        searchBar = findViewById(R.id.searchBar);
-        searchBar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                searchBar.setIconified(false);
-            }
-        });
+ //       searchBar = findViewById(R.id.searchBar);
+//        searchBar.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                searchBar.setIconified(false);
+//            }
+//        });
+
+        //searchBar.set
     }
 
 
@@ -206,25 +216,71 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         else CI = new LatLng(34.16034, -119.042781);
 
 
-        Event event = new Event(date,title ,place, d);
+        Event event = new Event(date,endDate,title ,place, d);
 
-        String everything = "\nLocation: " + place +
-                            "\nTime: " + date +
+        //String editedStart = date.equals("0")? "00": date;
+        //String editedEnd  = endDate.equals("0")? "00": endDate;
+
+        String everything =
+
+                "\nLocation: " + place +
+                            "\nTime: " + date + " to " + endDate +
                             "\nDescription: " + d;
 
 
-
-        mMap.addMarker(new MarkerOptions().position(CI).icon(BitmapDescriptorFactory.fromResource(R.drawable.ekho_marker_mini))
+        Marker marker =
+                mMap.addMarker(new MarkerOptions().position(CI).icon(BitmapDescriptorFactory.fromResource(R.drawable.ekho_marker_mini))
                 .title(title).snippet(everything));
 
-        //markers.add(new Marker(12,3))
+        markers.add(marker);
+        //markers.add(marker);
+
 
         if(addData) {
-            mDatabase.push().setValue(event);
-            Toast.makeText(MapsActivity.this,"New Event Created!", Toast.LENGTH_SHORT).show();
-        }
-        //mDatabase.push().setValue(event);
 
+            mDatabase.push().setValue(event);
+            Toast.makeText(MapsActivity.this,"New Event Created!" , Toast.LENGTH_SHORT).show();
+        }
+        //mDatabase.push().setValue(event); this causes it to spiral out of control
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.app_menu,menu);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+
+       SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+
+                Calendar cal = Calendar.getInstance();
+                Toast.makeText(MapsActivity.this,cal.toString(), Toast.LENGTH_SHORT).show();
+
+                for(Marker m : markers){
+                    m.setVisible(true);
+                }
+                for(Marker m : markers){
+                    if(!m.getTitle().toLowerCase().contains(s) && !m.getSnippet().toLowerCase().contains(s)){
+                        m.setVisible(false);
+                    }
+
+                }
+                //recyclerView.getFilter
+               // adapter = new EventViewHolder(events);
+               // ((EventViewHolder) adapter).getFilter().filter(s);
+                return false;
+            }
+        });
+        return true;//super.onCreateOptionsMenu(menu);
     }
 
 }

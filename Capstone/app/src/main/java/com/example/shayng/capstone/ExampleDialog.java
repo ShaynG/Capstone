@@ -14,6 +14,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.content.Context;
 import android.widget.TimePicker;
+import java.util.Calendar;
+
 
 import java.util.Date;
 
@@ -38,6 +40,7 @@ public class ExampleDialog extends AppCompatDialogFragment {
             View view = inflater.inflate(R.layout.create_dialog,null);
             editStartTime = view.findViewById(R.id.startTimePicker);
             editStartTime.setIs24HourView(false);
+            editEndTime = view.findViewById(R.id.endTimePicker);
             editDate = view.findViewById(R.id.datePicker);
             editTitle = view.findViewById(R.id.editName);
             spinner = view.findViewById(R.id.spinner);
@@ -62,25 +65,34 @@ public class ExampleDialog extends AppCompatDialogFragment {
                     String title="ok";
                     int hour=0;
                     int minute=0;
+                    int endHour=0;
+                    int endMinute=0;
                     String AMPM="";
                     String spin="";
                     String description="";
 
-
+                   // DateTimeFormatter dtf = new DateTimeFormatter("MM:dd:YY");
+                    Calendar start = Calendar.getInstance();
+                    Calendar end = Calendar.getInstance();
+                    start.set(editDate.getYear(),editDate.getMonth(),editDate.getDayOfMonth(),editStartTime.getHour(),editStartTime.getMinute());
+                    end.set(editDate.getYear(),editDate.getMonth(),editDate.getDayOfMonth(),editStartTime.getHour(),editStartTime.getMinute());
+                   // start.setTimeZone((Calendar.ZONE_OFFSET));
                     //Date daten = new Date();
                    // Time
-                    String date = editDate.getMonth() + " " + editDate.getDayOfMonth();
-
+                   // String date = editDate.getMonth() + " " + editDate.getDayOfMonth();
+                   // editDate.get
 
                     if(title != null && title.length() > 0) {
                         title = editTitle.getText().toString();
                         hour = editStartTime.getHour() % 12 == 0? 12: editStartTime.getHour() % 12;
+                        endHour = editEndTime.getHour() % 12 == 0? 12: editStartTime.getHour() % 12;
                         minute = editStartTime.getMinute();
+                        endMinute = editEndTime.getMinute();
                         AMPM = editStartTime.getHour() - 12 < 0? "AM":"PM";
                         spin = spinner.getSelectedItem().toString();
                         description = tellMeMore.getText().toString();
                     }
-                        listener.applyMarker(title,hour + ":" + minute + AMPM, hour + ":" + minute + AMPM,spin, true, description);
+                        listener.applyMarker(title,hour + ":" + minute + AMPM, endHour + ":" + endMinute + AMPM,spin, true, description);
 
 
                 }
@@ -92,7 +104,7 @@ public class ExampleDialog extends AppCompatDialogFragment {
     }
 
     public interface ExampleDialogListener{
-        void applyMarker(String title, String date, String endDate, String place, boolean addData, String description);
+        void applyMarker(String title, String startDate, String endDate, String place, boolean addData, String description);
 
     }
 

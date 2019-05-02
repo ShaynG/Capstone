@@ -1,7 +1,7 @@
 package com.example.shayng.capstone;
 import java.util.ArrayList;
 import java.util.Date;
-
+import java.util.Calendar;
 
 public class Event {
     private String startTime;
@@ -11,6 +11,8 @@ public class Event {
     private String location;
     private String description;
     private String urlLink;
+    private Calendar calendar;
+    private Boolean isActive;
 
     public String getUrlLink() {
         return urlLink;
@@ -21,19 +23,38 @@ public class Event {
     }
 
 
-    public Event(String startTime, String title, String location, String description) {
-        this.startTime = startTime;
+    public Event(String title, String location, int year, int startMonth , int startDay, int endMonth, String description) {
+        this.startTime = startTime;//.equals("0")? "00":startTime;
         this.title = title;
         this.location = location;
         this.description = description;
+        this.endTime = endTime;//.equals("0")? "00":endTime;
+        //date = new Date();
+        //date.setMonth();
+        calendar = Calendar.getInstance();
+
+        setUrlLink("");
     }
 
-    public Event(String startTime, String title, String location, String description, String urLink) {
-        this.startTime = startTime;
+    public Event(String startTime, String endTime, String title, String location, String description) {
+        this.startTime = startTime;//.equals("0")? "00":startTime;
+        this.title = title;
+        this.location = location;
+        this.description = description;
+        this.endTime = endTime;//.equals("0")? "00":endTime;
+        //date = new Date();
+        //date.setMonth();
+
+        setUrlLink("");
+    }
+
+    public Event(String startTime, String endTime, String title, String location, String description, String urLink) {
+        this.startTime = startTime;//.equals("0")? "00":startTime;
         this.title = title;
         this.location = location;
         this.urlLink = urLink;
         this.description = description;
+        this.endTime = endTime;//.equals("0")? "00":endTime;
     }
 
     public void setStartTime(String time) {
