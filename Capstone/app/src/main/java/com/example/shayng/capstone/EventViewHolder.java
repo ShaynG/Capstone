@@ -8,11 +8,11 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
 import android.widget.ImageButton;
-
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
-public class EventViewHolder extends RecyclerView.Adapter <EventViewHolder.ContactViewHolder> implements Filterable {
+public class EventViewHolder extends RecyclerView.Adapter<EventViewHolder.ContactViewHolder> implements Filterable {
     private List<Event> eventList;
     private List<Event> eventsListFilter;
 
@@ -28,16 +28,69 @@ public class EventViewHolder extends RecyclerView.Adapter <EventViewHolder.Conta
 
     @Override
     public void onBindViewHolder(ContactViewHolder contactViewHolder, int i) {
+
         Event ci = eventList.get(i);
+
+        Calendar editedStart = Calendar.getInstance();
+        editedStart.setTimeInMillis(Long.parseLong(ci.getStartTime()));
+
+        Calendar editedEnd = Calendar.getInstance();
+        editedEnd.setTimeInMillis(Long.parseLong(ci.getEndTime()));
+
+        int hour = editedStart.getTime().getHours() % 12 == 0? 12: editedStart.getTime().getHours() % 12;
+        int endHour = editedEnd.getTime().getHours() % 12 == 0? 12: editedEnd.getTime().getHours() % 12;
+        String minute = editedStart.getTime().getMinutes()==0? "00": editedStart.getTime().getMinutes()+"";
+        if(minute.length()==1) minute = "0" + minute;
+        String endMinute = editedEnd.getTime().getMinutes()==0? "00": editedEnd.getTime().getMinutes()+"";
+        if(endMinute.length()==1) endMinute = "0" + endMinute;
+        String AMPM1 = editedStart.getTime().getHours() - 12 < 0? "AM":"PM";
+        String AMPM2 = editedEnd.getTime().getHours() - 12 < 0? "AM":"PM";
+
+        String toDate;
+        //= (editedStart.getTime().getMonth()+1) +" "+ editedStart.getTime().getDate()+" ";
+        switch(editedStart.getTime().getMonth()){
+            case Calendar.JANUARY: toDate="January ";
+                break;
+            case Calendar.FEBRUARY: toDate="February ";
+                break;
+            case Calendar.MARCH: toDate="March ";
+                break;
+            case Calendar.APRIL: toDate="April ";
+                break;
+            case Calendar.MAY: toDate="May ";
+                break;
+            case Calendar.JUNE: toDate="June ";
+                break;
+            case Calendar.JULY: toDate="July ";
+                break;
+            case Calendar.AUGUST: toDate="August ";
+                break;
+            case Calendar.SEPTEMBER: toDate="September ";
+                break;
+            case Calendar.OCTOBER: toDate="October ";
+                break;
+            case Calendar.NOVEMBER: toDate="November ";
+                break;
+            case Calendar.DECEMBER: toDate="December ";
+                break;
+            default: toDate = "May ";
+        }
+
+        toDate+=editedStart.getTime().getDate()+", ";
+
+
+
+        String toTime = toDate + hour+":"+minute+AMPM1 + " to " + endHour+":"+endMinute+AMPM2;
+
         //contactViewHolder.favButton.setImageIcon();
         contactViewHolder.vLocation.setText(ci.getLocation());
-        contactViewHolder.vTime.setText(ci.getStartTime() + " to " + ci.getEndTime());
-        contactViewHolder.vLink.setText("www.csuci.edu");
+        contactViewHolder.vTime.setText(toTime);
+        //contactViewHolder.vLink.setText("www.csuci.edu");
         contactViewHolder.vTitle.setText(ci.getTitle());
         contactViewHolder.vDescription.setText(ci.getDescription());
 
 
-        if(ci.getUrlLink().equals("")) contactViewHolder.vLink.setVisibility(View.GONE);
+        //if(ci.getUrlLink().equals("")) contactViewHolder.vLink.setVisibility(View.GONE);
 
     }
 

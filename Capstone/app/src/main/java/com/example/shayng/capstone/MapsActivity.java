@@ -63,7 +63,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
+                Calendar now = Calendar.getInstance();
+
                 for(DataSnapshot ds : dataSnapshot.getChildren()) {
+
 
                     String description = ds.child("description").getValue(String.class);
                     String location = ds.child("location").getValue(String.class);
@@ -71,7 +74,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     String title = ds.child("title").getValue(String.class);
                     String endTime = ds.child("endTime").getValue(String.class);
 
-                    applyMarker(title,startTime, endTime, location,false, description);
+        //this should work
+                    if(now.getTimeInMillis()<Long.parseLong(endTime)) {
+                        applyMarker(title, startTime, endTime, location, false, description);
+                    }
                   //  Log.d("TAG", arrival + " / " + departure  + " / " + time);
                   // list.add(time);
                 }
@@ -164,7 +170,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
     @Override
-    public void applyMarker(String title, String date, String endDate, String place, boolean addData, String d){
+    public void applyMarker(String title, String startDate, String endDate, String place, boolean addData, String description){
 
         LatLng CI;
 
@@ -216,16 +222,67 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         else CI = new LatLng(34.16034, -119.042781);
 
 
-        Event event = new Event(date,endDate,title ,place, d);
+        Event event = new Event(title,startDate,endDate,place, description);
 
+
+        Calendar editedStart = Calendar.getInstance();
+        editedStart.setTimeInMillis(Long.parseLong(startDate));
+
+        Calendar editedEnd = Calendar.getInstance();
+        editedEnd.setTimeInMillis(Long.parseLong(endDate));
         //String editedStart = date.equals("0")? "00": date;
         //String editedEnd  = endDate.equals("0")? "00": endDate;
 
+        int hour = editedStart.getTime().getHours() % 12 == 0? 12: editedStart.getTime().getHours() % 12;
+        int endHour = editedEnd.getTime().getHours() % 12 == 0? 12: editedEnd.getTime().getHours() % 12;
+        String minute = editedStart.getTime().getMinutes()==0? "00": editedStart.getTime().getMinutes()+"";
+        if(minute.length()==1) minute = "0" + minute;
+        String endMinute = editedEnd.getTime().getMinutes()==0? "00": editedEnd.getTime().getMinutes()+"";
+        if(endMinute.length()==1) endMinute = "0" + endMinute;
+        String AMPM1 = editedStart.getTime().getHours() - 12 < 0? "AM":"PM";
+        String AMPM2 = editedEnd.getTime().getHours() - 12 < 0? "AM":"PM";
+
+        String toDate;
+
+
+
+        switch(editedStart.getTime().getMonth()){
+            case Calendar.JANUARY: toDate="January ";
+                break;
+            case Calendar.FEBRUARY: toDate="February ";
+                break;
+            case Calendar.MARCH: toDate="March ";
+                break;
+            case Calendar.APRIL: toDate="April ";
+                break;
+            case Calendar.MAY: toDate="May ";
+                break;
+            case Calendar.JUNE: toDate="June ";
+                break;
+            case Calendar.JULY: toDate="July ";
+                break;
+            case Calendar.AUGUST: toDate="August ";
+                break;
+            case Calendar.SEPTEMBER: toDate="September ";
+                break;
+            case Calendar.OCTOBER: toDate="October ";
+                break;
+            case Calendar.NOVEMBER: toDate="November ";
+                break;
+            case Calendar.DECEMBER: toDate="December ";
+                break;
+            default: toDate = "May ";
+        }
+
+        toDate+=editedStart.getTime().getDate()+", ";
+
         String everything =
 
-                "\nLocation: " + place +
-                            "\nTime: " + date + " to " + endDate +
-                            "\nDescription: " + d;
+                            "\nLocation: " + place +
+
+                            "\n\nTime: " + toDate + hour+":"+ minute+AMPM1 + " to " + endHour+":"+endMinute+AMPM2
+                                             +
+                            "\n\nDescription: " + description;
 
 
         Marker marker =
@@ -238,6 +295,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         if(addData) {
 
+            //c.getTimeInMillis()
             mDatabase.push().setValue(event);
             Toast.makeText(MapsActivity.this,"New Event Created!" , Toast.LENGTH_SHORT).show();
         }
@@ -262,8 +320,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public boolean onQueryTextChange(String s) {
 
-                Calendar cal = Calendar.getInstance();
-                Toast.makeText(MapsActivity.this,cal.toString(), Toast.LENGTH_SHORT).show();
+
 
                 for(Marker m : markers){
                     m.setVisible(true);

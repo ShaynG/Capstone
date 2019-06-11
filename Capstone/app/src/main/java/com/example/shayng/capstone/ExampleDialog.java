@@ -14,6 +14,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.content.Context;
 import android.widget.TimePicker;
+import android.widget.Toast;
+
 import java.util.Calendar;
 
 
@@ -36,7 +38,7 @@ public class ExampleDialog extends AppCompatDialogFragment {
 
 
 
-            LayoutInflater inflater = getActivity().getLayoutInflater();
+            final LayoutInflater inflater = getActivity().getLayoutInflater();
             View view = inflater.inflate(R.layout.create_dialog,null);
             editStartTime = view.findViewById(R.id.startTimePicker);
             editStartTime.setIs24HourView(false);
@@ -48,7 +50,7 @@ public class ExampleDialog extends AppCompatDialogFragment {
 
 
             editDate.setMinDate(System.currentTimeMillis());
-            //editDate.setMaxDate();
+            editDate.setMaxDate(System.currentTimeMillis()+604800000);
 
 
 
@@ -75,12 +77,13 @@ public class ExampleDialog extends AppCompatDialogFragment {
                     Calendar start = Calendar.getInstance();
                     Calendar end = Calendar.getInstance();
                     start.set(editDate.getYear(),editDate.getMonth(),editDate.getDayOfMonth(),editStartTime.getHour(),editStartTime.getMinute());
-                    end.set(editDate.getYear(),editDate.getMonth(),editDate.getDayOfMonth(),editStartTime.getHour(),editStartTime.getMinute());
+                    end.set(editDate.getYear(),editDate.getMonth(),editDate.getDayOfMonth(),editEndTime.getHour(),editEndTime.getMinute());
                    // start.setTimeZone((Calendar.ZONE_OFFSET));
                     //Date daten = new Date();
                    // Time
                    // String date = editDate.getMonth() + " " + editDate.getDayOfMonth();
                    // editDate.get
+                    start.getTimeInMillis();
 
                     if(title != null && title.length() > 0) {
                         title = editTitle.getText().toString();
@@ -92,7 +95,24 @@ public class ExampleDialog extends AppCompatDialogFragment {
                         spin = spinner.getSelectedItem().toString();
                         description = tellMeMore.getText().toString();
                     }
-                        listener.applyMarker(title,hour + ":" + minute + AMPM, endHour + ":" + endMinute + AMPM,spin, true, description);
+
+                    Calendar now = Calendar.getInstance();
+
+                    if(start.after(end)) {
+                        Toast.makeText(inflater.getContext(), "Error: Start time must be before end time.", Toast.LENGTH_LONG).show();
+                    }
+                    else if(title.length()<1){
+                        Toast.makeText(inflater.getContext(), "Error: Must put a title.", Toast.LENGTH_LONG).show();
+                    }
+                    else if(description.length()<1){
+                        Toast.makeText(inflater.getContext(), "Error: Must put a description.", Toast.LENGTH_LONG).show();
+                    }
+                    else if(end.before(now)){
+                        Toast.makeText(inflater.getContext(), "Error: Event can't be created in the past.", Toast.LENGTH_LONG).show();
+                    }
+                    else {
+                        listener.applyMarker(title, start.getTimeInMillis()+"", end.getTimeInMillis()+"",spin, true, description);
+                    }
 
 
                 }

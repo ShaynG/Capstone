@@ -6,13 +6,14 @@ import java.util.Calendar;
 public class Event {
     private String startTime;
     private String endTime;
-    private Date date;
     private String title;
     private String location;
     private String description;
     private String urlLink;
-    private Calendar calendar;
-    private Boolean isActive;
+
+    private Calendar now;
+    private Boolean isHappening;
+    private Boolean isOver;
 
     public String getUrlLink() {
         return urlLink;
@@ -23,38 +24,40 @@ public class Event {
     }
 
 
-    public Event(String title, String location, int year, int startMonth , int startDay, int endMonth, String description) {
-        this.startTime = startTime;//.equals("0")? "00":startTime;
+    public Event(String title, String start, String end, String location, String description) {
+        this.startTime = start;//"the";//startTime;//.equals("0")? "00":startTime;
         this.title = title;
         this.location = location;
         this.description = description;
-        this.endTime = endTime;//.equals("0")? "00":endTime;
+        this.endTime = end;//"then";//endTime;//.equals("0")? "00":endTime;
         //date = new Date();
         //date.setMonth();
-        calendar = Calendar.getInstance();
+        //now = Calendar.getInstance();
 
-        setUrlLink("");
+        //if(now.after(start) && now.before(end)) isHappening = true; else isHappening = false;
+
+        //setUrlLink("");
     }
 
-    public Event(String startTime, String endTime, String title, String location, String description) {
-        this.startTime = startTime;//.equals("0")? "00":startTime;
+    public Event(Calendar startTime, Calendar endTime, String title, String location, String description, String url) {
+        //this.startTime = startTime.to;//.equals("0")? "00":startTime;
         this.title = title;
         this.location = location;
         this.description = description;
-        this.endTime = endTime;//.equals("0")? "00":endTime;
+       // this.endTime = endTime;//.equals("0")? "00":endTime;
         //date = new Date();
         //date.setMonth();
 
-        setUrlLink("");
+        //setUrlLink("");
     }
 
     public Event(String startTime, String endTime, String title, String location, String description, String urLink) {
-        this.startTime = startTime;//.equals("0")? "00":startTime;
+        //this.startTime = startTime;//.equals("0")? "00":startTime;
         this.title = title;
         this.location = location;
         this.urlLink = urLink;
         this.description = description;
-        this.endTime = endTime;//.equals("0")? "00":endTime;
+        //this.endTime = endTime;//.equals("0")? "00":endTime;
     }
 
     public void setStartTime(String time) {

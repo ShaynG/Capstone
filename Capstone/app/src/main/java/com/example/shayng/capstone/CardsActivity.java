@@ -25,6 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 
 public class CardsActivity extends AppCompatActivity implements ExampleDialog.ExampleDialogListener{
@@ -69,7 +70,8 @@ public class CardsActivity extends AppCompatActivity implements ExampleDialog.Ex
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
+                Calendar now = Calendar.getInstance();
+                events.clear();
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
 
                     String description = ds.child("description").getValue(String.class);
@@ -77,13 +79,13 @@ public class CardsActivity extends AppCompatActivity implements ExampleDialog.Ex
                     String startTime = ds.child("startTime").getValue(String.class);
                     String title = ds.child("title").getValue(String.class);
                     String endTime = ds.child("endTime").getValue(String.class);
-                    //  Log.d("TAG", arrival + " / " + departure  + " / " + time);
-                    //  list.add(time);
 
-
-                    events.add(new Event(startTime,endTime,title,location,description));
-                    adapter = new EventViewHolder(events);
-                    recyclerView.setAdapter(adapter);
+                    if(now.getTimeInMillis()<Long.parseLong(endTime)) {
+                        applyMarker(title, startTime, endTime, location, false, description);
+                    }
+                    //events.add(new Event(title,startTime,endTime,location,description));
+                    //adapter = new EventViewHolder(events);
+                    //recyclerView.setAdapter(adapter);
                 }
 
             }
@@ -125,14 +127,16 @@ public class CardsActivity extends AppCompatActivity implements ExampleDialog.Ex
 
 @Override
 
-public void applyMarker(String title, String date, String endDate, String place, boolean addData, String description)
+public void applyMarker(String title, String startDate, String endDate, String place, boolean addData, String description)
 {
-    events.add(new Event(date,endDate,title,place,description));
+    events.add(new Event(title,startDate,endDate,place,description));
     adapter = new EventViewHolder(events);
     recyclerView.setAdapter(adapter);
 
-    if(addData) mDatabase.push().setValue(new Event(date,endDate,title,place,description));
-    Toast.makeText(CardsActivity.this,"New Event Created!", Toast.LENGTH_SHORT).show();
+    if(addData) {
+        mDatabase.push().setValue(new Event(title, startDate, endDate, place, description));
+        Toast.makeText(CardsActivity.this, "New Event Created!", Toast.LENGTH_SHORT).show();
+    }
 }
 
     @Override
